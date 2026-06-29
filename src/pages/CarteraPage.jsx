@@ -114,7 +114,7 @@ export default function CarteraPage() {
                   <div style={{ display: 'flex', gap: 8 }}>
                     <button
                       className="hb-btn hb-btn-ghost hb-btn-sm"
-                      onClick={() => navigate(`/clientes/${it.cliente_id}/ficha`)}
+                      onClick={() => navigate(`/clientes/${it.cliente_id}/ficha`, { state: { solicitudId: it.solicitud_id } })}
                     >
                       <FileText size={15} /> Ficha
                     </button>

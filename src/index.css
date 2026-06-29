@@ -1,38 +1,33 @@
 :root {
-  /* Paleta de marca Banco Andino — colores del textil andino */
-  --hb-red: #e2132b;
-  --hb-red-dark: #b50f22;
-  --hb-red-light: #fde8eb;
-  --hb-magenta: #e6398b;
-  --hb-turquesa: #00a9a5;
-  --hb-naranja: #f7941e;
-  --hb-amarillo: #fbc02d;
-  --hb-verde-t: #4caf50;
-  --hb-morado: #8e24aa;
+  /* Paleta de marca Caja Trujillo */
+  --hb-red: #CE1126;
+  --hb-red-dark: #A50D1E;
+  --hb-red-light: #FCE8EA;
+  --hb-magenta: #CE1126;
+  --hb-turquesa: #003366;
+  --hb-naranja: #00509E;
+  --hb-amarillo: #CE1126;
+  --hb-verde-t: #CE1126;
+  --hb-morado: #003366;
 
-  --hb-bg: #fbf7f8;
-  --hb-text: #2b2b3a;
-  --hb-muted: #6b6b7b;
-  --hb-border: #f0e6ea;
-  --hb-green: #16a34a;
-  --hb-amber: #d97706;
+  --hb-bg: #fdfcfc;
+  --hb-text: #1a1a1a;
+  --hb-muted: #757575;
+  --hb-border: #e0e0e0;
+  --hb-green: #2ecc71;
+  --hb-amber: #f39c12;
   --hb-shadow: 0 1px 3px rgba(16, 24, 40, 0.08), 0 1px 2px rgba(16, 24, 40, 0.06);
   --hb-radius: 14px;
 
-  /* Gradiente y franja tejida característicos de la marca */
-  --hb-grad: linear-gradient(110deg, #8e24aa, #e2132b 55%, #f7941e);
-  --hb-grad-login: linear-gradient(135deg, #8e24aa, #e2132b 50%, #f7941e);
-  --hb-grad-naranja: linear-gradient(135deg, #f7941e, #f25a1c 60%, #e2132b);
-  --hb-grad-rojo: linear-gradient(150deg, #e2132b, #c11138 55%, #8e24aa);
+  /* Gradiente y franja de Caja Trujillo */
+  --hb-grad: linear-gradient(110deg, #CE1126, #003366 55%, #CE1126);
+  --hb-grad-login: linear-gradient(135deg, #003366, #CE1126 50%, #00509E);
+  --hb-grad-naranja: linear-gradient(135deg, #CE1126, #CE1126 60%, #003366);
+  --hb-grad-rojo: linear-gradient(150deg, #CE1126, #A50D1E 55%, #003366);
   --hb-franja: repeating-linear-gradient(
     90deg,
-    #e2132b 0 14px,
-    #fbc02d 14px 22px,
-    #00a9a5 22px 36px,
-    #8e24aa 36px 44px,
-    #4caf50 44px 58px,
-    #e6398b 58px 66px,
-    #f7941e 66px 80px
+    #CE1126 0 14px,
+    #003366 14px 28px
   );
 }
 
@@ -167,10 +162,10 @@ button { font-family: inherit; cursor: pointer; }
 .cm-login-topbar {
   position: absolute; top: 6px; left: 0; right: 0; z-index: 6;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 26px; background: #fff;
+  padding: 16px 26px; background: var(--hb-red);
 }
 .cm-login-chip {
-  background: var(--hb-red-light); color: var(--hb-red-dark);
+  border: 1px solid rgba(255,255,255,0.4); color: #fff; background: rgba(255,255,255,0.15);
   font-size: 12.5px; font-weight: 700; padding: 6px 14px; border-radius: 999px;
 }
 

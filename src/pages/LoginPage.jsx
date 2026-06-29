@@ -9,7 +9,7 @@ import Alert from '../components/ui/Alert.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
 import { extractError } from '../utils/format.js'
 
-// Carrusel "Nuestra esencia" — identidad de Banco Andino.
+// Carrusel "Nuestra esencia" — identidad de Caja Trujillo.
 const SLIDES = [
   {
     tag: 'NUESTRA ESENCIA',
@@ -22,7 +22,7 @@ const SLIDES = [
     tag: 'NUESTRA ESENCIA',
     icon: Eye,
     titulo: 'Visión',
-    desc: 'Ser el banco aliado de la microempresa peruana, reconocido por su cercanía, tecnología y compromiso con el crecimiento de cada cliente.',
+    desc: 'Ser la caja aliada de la microempresa peruana, reconocida por su cercanía, tecnología y compromiso con el crecimiento de cada cliente.',
     pills: ['Cercanía', 'Tecnología', 'Crecimiento'],
   },
   {
@@ -89,7 +89,7 @@ export default function LoginPage() {
     <div className="cm-login">
       {/* Cabecera flotante */}
       <div className="cm-login-topbar">
-        <Logo size={40} variant="dark" subtitle="CORE FINANCIERO" />
+        <Logo size={40} variant="light" subtitle="CORE FINANCIERO" />
         <span className="cm-login-chip">Sistema interno · Uso exclusivo del personal</span>
       </div>
 
@@ -181,8 +181,9 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <p className="cm-auth-hint">
-            Demo · DNI/código <strong>0001</strong> · clave <strong>1234</strong>
+          <p className="cm-auth-hint" style={{ lineHeight: '1.5' }}>
+            Demo Asesor · Código <strong>0001</strong> · clave <strong>1234</strong><br />
+            Demo Supervisor · Código <strong>0002</strong> · clave <strong>1234</strong>
           </p>
         </div>
       </section>

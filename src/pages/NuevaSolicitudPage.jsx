@@ -5,7 +5,7 @@ import PageHead from '../components/layout/PageHead.jsx'
 import Card from '../components/ui/Card.jsx'
 import Alert from '../components/ui/Alert.jsx'
 import Money from '../components/ui/Money.jsx'
-import { crearSolicitud } from '../services/solicitudesService.js'
+import { crearSolicitud, actualizarSolicitud } from '../services/solicitudesService.js'
 import { extractError, toNumber } from '../utils/format.js'
 
 const MONEDAS = [{ v: 'PEN', l: 'Soles (S/)' }, { v: 'USD', l: 'Dólares (US$)' }]
@@ -30,12 +30,12 @@ export default function NuevaSolicitudPage() {
     tipo_negocio: pre.tipo_negocio || '',
     nombre_negocio: pre.nombre_negocio || '',
     ingresos_estimados: '',
-    monto_solicitado: '',
-    plazo_meses: '12',
+    monto_solicitado: pre.monto_solicitado || '',
+    plazo_meses: pre.plazo_meses ? String(pre.plazo_meses) : '12',
     moneda: 'PEN',
     tipo_cuota: 'mensual',
     garantia: 'sin_garantia',
-    destino_credito: '',
+    destino_credito: pre.destino_credito || '',
     tea_referencial: '36',
   })
   const [error, setError] = useState(null)
@@ -85,7 +85,9 @@ export default function NuevaSolicitudPage() {
         cuota_estimada: cuotaEstimada ? Number(cuotaEstimada.toFixed(2)) : null,
         tea_referencial: toNumber(f.tea_referencial),
       }
-      const res = await crearSolicitud(payload)
+      const res = pre.solicitudId
+        ? await actualizarSolicitud(pre.solicitudId, payload)
+        : await crearSolicitud(payload)
       setDone(res)
     } catch (err) {
       setError(extractError(err))
@@ -97,7 +99,7 @@ export default function NuevaSolicitudPage() {
   if (done) {
     return (
       <>
-        <PageHead title="Solicitud registrada" icon={CheckCircle2} />
+        <PageHead title={pre.solicitudId ? "Solicitud verificada" : "Solicitud registrada"} icon={CheckCircle2} />
         <Card style={{ borderTop: '5px solid var(--hb-green)' }}>
           <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
             <CheckCircle2 size={42} color="var(--hb-green)" style={{ flexShrink: 0 }} />
@@ -120,7 +122,11 @@ export default function NuevaSolicitudPage() {
   return (
     <>
       <button className="cm-back" onClick={() => navigate(-1)}><ArrowLeft size={16} /> Volver</button>
-      <PageHead title="Nueva solicitud de crédito" subtitle="Registra los datos del solicitante y las condiciones." icon={PlusCircle} />
+      <PageHead
+        title={pre.solicitudId ? "Verificar solicitud de crédito" : "Nueva solicitud de crédito"}
+        subtitle={pre.solicitudId ? "Verifica los datos del cliente y confirma las condiciones." : "Registra los datos del solicitante y las condiciones."}
+        icon={PlusCircle}
+      />
 
       {error && <Alert tipo="error">{error}</Alert>}
 
@@ -210,7 +216,7 @@ export default function NuevaSolicitudPage() {
 
         <div style={{ display: 'flex', gap: 10, marginTop: 18 }}>
           <button type="submit" className="hb-btn" disabled={saving}>
-            <CheckCircle2 size={16} /> {saving ? 'Registrando…' : 'Registrar solicitud'}
+            <CheckCircle2 size={16} /> {saving ? 'Registrando…' : pre.solicitudId ? 'Verificar y registrar solicitud' : 'Registrar solicitud'}
           </button>
           <button type="button" className="hb-btn hb-btn-gray" onClick={() => navigate('/solicitudes')}>Cancelar</button>
         </div>

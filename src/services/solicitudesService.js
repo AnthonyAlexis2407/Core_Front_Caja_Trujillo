@@ -23,3 +23,10 @@ export async function agregarNota(solicitudId, contenido) {
   const { data } = await api.post(`/solicitudes/${solicitudId}/notas`, { contenido })
   return data
 }
+
+/** Actualiza una solicitud existente. PUT /solicitudes/{id} */
+export async function actualizarSolicitud(solicitudId, payload) {
+  const { data } = await api.put(`/solicitudes/${solicitudId}`, payload)
+  return data
+}
+

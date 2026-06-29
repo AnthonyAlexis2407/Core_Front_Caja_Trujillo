@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import {
   ArrowLeft, UserCircle2, Phone, MapPin, Store, BadgeCheck,
   Wallet, History, Gift, Activity, PlusCircle,
@@ -16,6 +16,8 @@ import { extractError, formatPct, formatDate, humanizar } from '../utils/format.
 export default function FichaClientePage() {
   const { clienteId } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
+  const { solicitudId } = location.state || {}
   const [ficha, setFicha] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -34,7 +36,7 @@ export default function FichaClientePage() {
   if (error) return <Alert tipo="error">{error}</Alert>
   if (!ficha) return null
 
-  const { cliente, posicion, historial = [], oferta, indicadores } = ficha
+  const { cliente, posicion, historial = [], oferta, indicadores, solicitud_pendiente } = ficha
   const nombre = `${cliente.nombres} ${cliente.apellidos}`.trim()
 
   const irNuevaSolicitud = () => {
@@ -46,6 +48,10 @@ export default function FichaClientePage() {
         telefono: cliente.telefono,
         tipo_negocio: cliente.tipo_negocio,
         nombre_negocio: cliente.nombre_negocio,
+        solicitudId: solicitud_pendiente?.id || solicitudId,
+        monto_solicitado: solicitud_pendiente?.monto_solicitado || '',
+        plazo_meses: solicitud_pendiente?.plazo_meses || '12',
+        destino_credito: solicitud_pendiente?.destino_credito || '',
       },
     })
   }
@@ -60,7 +66,7 @@ export default function FichaClientePage() {
         icon={UserCircle2}
         actions={
           <button className="hb-btn" onClick={irNuevaSolicitud}>
-            <PlusCircle size={16} /> Nueva solicitud
+            <PlusCircle size={16} /> {solicitud_pendiente ? 'Verificar solicitud' : 'Nueva solicitud'}
           </button>
         }
       />
@@ -106,6 +112,24 @@ export default function FichaClientePage() {
           </div>
         </Card>
       </div>
+
+      {solicitud_pendiente && (
+        <Card title="Solicitud en Tránsito (App Cliente)" icon={Wallet} style={{ marginTop: 16, borderColor: '#bcd2ee', background: '#f0f5ff' }}>
+          <dl className="cm-dl">
+            <div><dt>Nro Expediente</dt><dd><strong>{solicitud_pendiente.numero_expediente || 'Generando…'}</strong></dd></div>
+            <div><dt>Monto solicitado</dt><dd><Money value={solicitud_pendiente.monto_solicitado} /></dd></div>
+            <div><dt>Plazo solicitado</dt><dd>{solicitud_pendiente.plazo_meses} meses</dd></div>
+            <div><dt>Destino</dt><dd>{solicitud_pendiente.destino_credito || '—'}</dd></div>
+            <div><dt>Estado</dt><dd><Badge estado={solicitud_pendiente.estado} /></dd></div>
+            <div><dt>Creada</dt><dd style={{ fontSize: 13 }}>{formatDate(solicitud_pendiente.created_at)}</dd></div>
+          </dl>
+          <div style={{ marginTop: 12, display: 'flex', justifyContent: 'flex-end' }}>
+            <button className="hb-btn hb-btn-sm" onClick={irNuevaSolicitud}>
+              <PlusCircle size={14} /> Verificar y Completar Solicitud
+            </button>
+          </div>
+        </Card>
+      )}
 
       {oferta && (
         <Card title="Oferta pre-aprobada" icon={Gift} style={{ marginTop: 16, borderColor: '#bfe3c8', background: '#f6fbf7' }}>
