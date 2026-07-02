@@ -30,3 +30,9 @@ export async function actualizarSolicitud(solicitudId, payload) {
   return data
 }
 
+/** Simula evaluacion de comite. POST /comite/evaluar/{id} */
+export async function evaluarComite(solicitudId) {
+  const { data } = await api.post(`/comite/evaluar/${solicitudId}`)
+  return data
+}
+

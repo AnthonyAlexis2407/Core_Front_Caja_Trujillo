@@ -2,13 +2,12 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard, Briefcase, FileText, ShieldCheck, HandCoins,
-  BarChart3, Clock, ChevronDown, LogOut, User,
+  BarChart3, Clock, ChevronDown, LogOut, User, Users
 } from 'lucide-react'
 import Logo from '../ui/Logo.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { iniciales, humanizar } from '../../utils/format.js'
 
-// Pestañas principales del portal del personal.
 export const TABS = [
   { to: '/inicio', label: 'Inicio', icon: LayoutDashboard },
   { to: '/cartera', label: 'Cartera', icon: Briefcase },
@@ -16,6 +15,7 @@ export const TABS = [
   { to: '/evaluacion', label: 'Evaluación', icon: ShieldCheck },
   { to: '/cobranza', label: 'Cobranza', icon: HandCoins },
   { to: '/reportes', label: 'Reportes', icon: BarChart3 },
+  { to: '/comite', label: 'Comité', icon: Users, role: 'supervisor' },
 ]
 
 function Reloj() {
@@ -90,7 +90,7 @@ export default function Header() {
 
       <nav className="cm-tabs">
         <div className="cm-tabs-inner">
-          {TABS.map((t) => {
+          {TABS.filter(t => !t.role || t.role === user?.perfil?.toLowerCase()).map((t) => {
             const Icon = t.icon
             const active = location.pathname === t.to || location.pathname.startsWith(t.to + '/')
             return (

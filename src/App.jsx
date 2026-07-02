@@ -11,6 +11,8 @@ import NuevaSolicitudPage from './pages/NuevaSolicitudPage.jsx'
 import EvaluacionPage from './pages/EvaluacionPage.jsx'
 import CobranzaPage from './pages/CobranzaPage.jsx'
 import ReportesPage from './pages/ReportesPage.jsx'
+import ComitePage from './pages/ComitePage.jsx'
+
 
 // Layout de las rutas autenticadas: cabecera + pestañas + contenido.
 function PrivateLayout({ children }) {
@@ -39,6 +41,8 @@ export default function App() {
       <Route path="/evaluacion" element={<PrivateLayout><EvaluacionPage /></PrivateLayout>} />
       <Route path="/cobranza" element={<PrivateLayout><CobranzaPage /></PrivateLayout>} />
       <Route path="/reportes" element={<PrivateLayout><ReportesPage /></PrivateLayout>} />
+      <Route path="/comite" element={<PrivateLayout><ComitePage /></PrivateLayout>} />
+
 
       <Route path="/" element={<Navigate to="/inicio" replace />} />
       <Route path="*" element={<Navigate to="/inicio" replace />} />
